@@ -7,7 +7,23 @@ class PhotoSwipe extends React.Component {
     isOpen: React.PropTypes.bool.isRequired,
     items: React.PropTypes.array.isRequired,
     options: React.PropTypes.object,
-    onClose: React.PropTypes.func
+    onBeforeChange: React.PropTypes.func,
+    onAfterChange: React.PropTypes.func,
+    onImageLoadComplete: React.PropTypes.func,
+    onResize: React.PropTypes.func,
+    onGettingData: React.PropTypes.func,
+    onMouseUsed: React.PropTypes.func,
+    onInitialZoomIn: React.PropTypes.func,
+    onInitialZoomInEnd: React.PropTypes.func,
+    onInitialZoomOut: React.PropTypes.func,
+    onInitialZoomOutEnd: React.PropTypes.func,
+    onParseVerticalMargin: React.PropTypes.func,
+    onClose: React.PropTypes.func,
+    onUnbindEvents: React.PropTypes.func,
+    onDestroy: React.PropTypes.func,
+    onUpdateScrollOffset: React.PropTypes.func,
+    onPreventDragEvent: React.PropTypes.func,
+    onShareLinkClick: React.PropTypes.func
   };
   static defaultProps = {
     items: [],
@@ -50,7 +66,73 @@ class PhotoSwipe extends React.Component {
   openPhotoSwipe = (items, options) => {
     let pswpElement = React.findDOMNode(this);
     this.photoSwipe = new PhotoSwipeFn(pswpElement, PhotoSwipeUIDefault, items, options);
+
+    if(this.props.onBeforeChange) {
+      this.photoSwipe.listen('beforeChange', this.props.onBeforeChange);
+    }
+
+    if(this.props.onAfterChange) {
+      this.photoSwipe.listen('afterChange', this.props.onAfterChange);
+    }
+
+    if(this.props.onImageLoadComplete) {
+      this.photoSwipe.listen('imageLoadComplete', this.props.onImageLoadComplete);
+    }
+
+    if(this.props.onResize) {
+      this.photoSwipe.listen('resize', this.props.onResize);
+    }
+
+    if(this.props.onGettingData) {
+      this.photoSwipe.listen('gettingData', this.props.onGettingData);
+    }
+
+    if(this.props.onMouseUsed) {
+      this.photoSwipe.listen('mouseUsed', this.props.onMouseUsed);
+    }
+
+    if(this.props.onInitialZoomIn) {
+      this.photoSwipe.listen('initialZoomIn', this.props.onInitialZoomIn);
+    }
+
+    if(this.props.onInitialZoomInEnd) {
+      this.photoSwipe.listen('initialZoomInEnd', this.props.onInitialZoomInEnd);
+    }
+
+    if(this.props.onInitialZoomOut) {
+      this.photoSwipe.listen('initialZoomOut', this.props.onInitialZoomOut);
+    }
+
+    if(this.props.onInitialZoomOutEnd) {
+      this.photoSwipe.listen('initialZoomOutEnd', this.props.onInitialZoomOutEnd);
+    }
+
+    if(this.props.onParseVerticalMargin) {
+      this.photoSwipe.listen('parseVerticalMargin', this.props.onParseVerticalMargin);
+    }
+
     this.photoSwipe.listen('close', this.handleClose);
+
+    if(this.props.onUnbindEvents) {
+      this.photoSwipe.listen('unbindEvents', this.props.onUnbindEvents);
+    }
+
+    if(this.props.onDestroy) {
+      this.photoSwipe.listen('destroy', this.props.onDestroy);
+    }
+
+    if(this.props.onUpdateScrollOffset) {
+      this.photoSwipe.listen('updateScrollOffset', this.props.onUpdateScrollOffset);
+    }
+
+    if(this.props.onPreventDragEvent) {
+      this.photoSwipe.listen('preventDragEvent', this.props.onPreventDragEvent);
+    }
+
+    if(this.props.onShareLinkClick) {
+      this.photoSwipe.listen('shareLinkClick', this.props.onShareLinkClick);
+    }
+
     this.setState({
       isOpen: true
     }, () => {
